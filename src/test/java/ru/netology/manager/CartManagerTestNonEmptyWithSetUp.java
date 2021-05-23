@@ -2,22 +2,25 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.domain.PurchaseItem;
-import ru.netology.manager.CartManager;
+import ru.netology.domain.MovieItem;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class CartManagerTestNonEmptyWithSetup {
-    private CartManager manager = new CartManager();
-    private PurchaseItem first = new PurchaseItem(1, 1, "first", 1, 1);
-    private PurchaseItem second = new PurchaseItem(2, 2, "second", 1, 1);
-    private PurchaseItem third = new PurchaseItem(3, 3, "third", 1, 1);
+    private MovieManager manager = new MovieManager();
+    private MovieItem first = new MovieItem(1, 1, "RED", 1);
+    private MovieItem second = new MovieItem(2, 2, "SAW", 1);
+    private MovieItem third = new MovieItem(3, 3, "Love Actually", 1);
+    private MovieItem fourth = new MovieItem(4, 4, "VHS", 1);
+    private MovieItem fifth = new MovieItem(5, 5, "SAW2", 1);
 
     @BeforeEach
     public void setUp() {
         manager.add(first);
         manager.add(second);
         manager.add(third);
+        manager.add(fourth);
+        manager.add(fifth);
     }
 
     @Test
@@ -25,22 +28,21 @@ class CartManagerTestNonEmptyWithSetup {
         int idToRemove = 1;
         manager.removeById(idToRemove);
 
-        PurchaseItem[] actual = manager.getAll();
-        PurchaseItem[] expected = new PurchaseItem[]{third, second};
+        MovieItem[] actual = manager.getAll();
+        MovieItem[] expected = new MovieItem[]{third, second};
 
 //    assertEquals(expected, actual);
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldNotRemoveIfNotExists() {
-        int idToRemove = 4;
+    public void shouldShowWhatsThere() {
+        MovieItem item = new MovieItem(3);
 
-        manager.removeById(idToRemove);
+        MovieItem[] actual = manager.getAll();
+        MovieItem[] expected = new MovieItem[]{fourth, third, second, first};
 
-        PurchaseItem[] actual = manager.getAll();
-        PurchaseItem[] expected = new PurchaseItem[]{third, second, first};
-
-        assertArrayEquals(expected, actual);
     }
+
+
 }
